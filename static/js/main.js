@@ -52,4 +52,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     pre.appendChild(copyBtn);
   });
+
+  // Visitor Hit Counter (GitHub Pages / Production & Local Dev Support)
+  initHitCounter();
 });
+
+async function initHitCounter() {
+  const counterEl = document.getElementById('site-hit-counter');
+  if (!counterEl) return;
+
+  const namespace = counterEl.getAttribute('data-ns') || 'abobrinhas-amadas-blog';
+  const key = counterEl.getAttribute('data-key') || 'visits';
+  const isLocal = ['localhost', '127.0.0.1', '0.0.0.0', ''].includes(window.location.hostname);
+
+  const formatCount = (num) => String(num).padStart(6, '0');
+
+  // Ambiente de desenvolvimento local: simula contagem via localStorage
+  if (isLocal) {
+    let localCount = parseInt(localStorage.getItem('dev_hit_counter') || '1', 10);
+    if (!sessionStorage.getItem('dev_visited_session')) {
+      localCount += 1;
+      localStorage.setItem('dev_hit_counter', String(localCount));
+      sessionStorage.setItem('dev_visited_session', 'true');
+    }
+    counterEl.textContent = `VISITANTE: ${formatCount(localCount)}`;
+    return;
+  }
+
+  // Ambiente de producao (GitHub Pages / Dominio proprio)
+  try {
+    const hasVisitedInSession = sessionStorage.getItem('visited_session') === 'true';
+    const endpoint = hasVisitedInSession
+      ? `https://counterapi.com/api/${namespace}/view/${key}?readOnly=true`
+      : `https://counterapi.com/api/${namespace}/view/${key}`;
+
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (data && typeof data.value === 'number') {
+      sessionStorage.setItem('visited_session', 'true');
+      counterEl.textContent = `VISITANTE: ${formatCount(data.value)}`;
+    }
+  } catch (err) {
+    // Fallback gracioso em caso de falha de rede
+    console.warn('Nao foi possivel carregar a contagem de visitas:', err);
+  }
+}
