@@ -1,0 +1,35 @@
+<header class="site-header">
+  <div class="window-titlebar">
+    <span class="window-title-text">{{ .Site.Title }} - Netscape Navigator</span>
+    <div class="window-controls" aria-hidden="true">
+      <span class="win-btn">_</span>
+      <span class="win-btn">&#9633;</span>
+      <span class="win-btn">&times;</span>
+    </div>
+  </div>
+
+  <div class="header-container">
+    <div class="brand">
+      <a href="{{ "/" | relURL }}" class="brand-title">{{ .Site.Title }}</a>
+      {{ with .Site.Params.description }}
+      <p class="brand-tagline">[ {{ . }} ]</p>
+      {{ end }}
+    </div>
+
+    <div class="header-controls">
+      <nav class="site-nav" aria-label="Navegação principal">
+        {{ if .Site.Menus.main }}
+          {{ range .Site.Menus.main }}
+            <a class="nav-link{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} active{{ end }}" href="{{ .URL | relURL }}">[ {{ .Name }} ]</a>
+          {{ end }}
+        {{ else }}
+          <a class="nav-link{{ if .IsHome }} active{{ end }}" href="{{ "/" | relURL }}">[ Início ]</a>
+          <a class="nav-link{{ if eq .Section "gastronomia" }} active{{ end }}" href="{{ "gastronomia" | relURL }}">[ Gastronomia ]</a>
+          <a class="nav-link{{ if eq .Section "bares-por-ai" }} active{{ end }}" href="{{ "bares-por-ai" | relURL }}">[ Bares por Aí ]</a>
+          <a class="nav-link{{ if eq .Section "matematica" }} active{{ end }}" href="{{ "matematica" | relURL }}">[ Matemática ]</a>
+          <a class="nav-link{{ if eq .Section "carnaval" }} active{{ end }}" href="{{ "carnaval" | relURL }}">[ Carnaval ]</a>
+        {{ end }}
+      </nav>
+    </div>
+  </div>
+</header>

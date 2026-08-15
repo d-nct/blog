@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "pt-br" }}">
+<head>
+  {{ partial "head.html" . }}
+  {{ block "head" . }}{{ end }}
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Pular para o conteúdo</a>
+
+  <div class="site-wrapper">
+    {{ partial "header.html" . }}
+
+    <main id="main-content" class="main-content">
+      {{ block "main" . }}{{ end }}
+    </main>
+
+    {{ partial "footer.html" . }}
+  </div>
+
+  <script src="{{ "js/main.js" | relURL }}" defer></script>
+  {{ block "scripts" . }}{{ end }}
+</body>
+</html>

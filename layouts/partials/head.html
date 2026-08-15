@@ -1,0 +1,47 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+{{/* Dynamic Page Title */}}
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ with .Site.Params.subtitle }} — {{ . }}{{ end }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+
+{{/* SEO Meta Tags */}}
+{{ with .Description | default .Summary | default .Site.Params.description }}
+<meta name="description" content="{{ . | plainify | htmlUnescape | truncate 160 }}">
+{{ end }}
+<meta name="author" content="{{ .Params.author | default .Site.Params.author | default .Site.Title }}">
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{/* Open Graph / Facebook */}}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta property="og:description" content="{{ .Description | default .Summary | default .Site.Params.description | plainify | htmlUnescape | truncate 200 }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+{{ with .Params.cover.image | default .Params.image | default .Params.coverImage }}
+<meta property="og:image" content="{{ . | absURL }}">
+{{ end }}
+
+{{/* Twitter Card */}}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta name="twitter:description" content="{{ .Description | default .Summary | default .Site.Params.description | plainify | htmlUnescape | truncate 200 }}">
+{{ with .Params.cover.image | default .Params.image | default .Params.coverImage }}
+<meta name="twitter:image" content="{{ . | absURL }}">
+{{ end }}
+
+{{/* RSS feed link */}}
+{{ with .OutputFormats.Get "rss" }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ $.Site.Title }}">
+{{ end }}
+
+{{/* Favicon */}}
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23000080'/><text x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-family='sans-serif' font-weight='bold' font-size='40' fill='white'>AA</text></svg>">
+
+{{/* Stylesheets */}}
+<link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+
+{{/* KaTeX Math support */}}
+{{ if or .Params.math .Site.Params.math }}
+{{ partial "math.html" . }}
+{{ end }}

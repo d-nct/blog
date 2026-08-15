@@ -1,0 +1,176 @@
+{{ define "main" }}
+<article class="post-article">
+  {{/* Post Header */}}
+  <header class="post-header">
+    <div class="post-breadcrumbs">
+      <a href="{{ "/" | relURL }}">Início</a>
+      {{ with .Section }}
+        <span class="breadcrumb-separator">/</span>
+        <a href="{{ . | relURL }}" class="breadcrumb-section">{{ . | humanize }}</a>
+      {{ end }}
+    </div>
+
+    {{/* Categories */}}
+    {{ with .Params.categories }}
+      <div class="post-categories">
+        {{ range . }}
+          <a href="{{ "categories" | relURL }}/{{ . | urlize }}" class="category-badge">{{ . }}</a>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    <h1 class="post-title">{{ .Title }}</h1>
+
+    {{/* Subtitle or Description */}}
+    {{ with .Params.description }}
+      <p class="post-lead">{{ . }}</p>
+    {{ else }}
+      {{ with .Params.subtitle }}
+        <p class="post-lead">{{ . }}</p>
+      {{ end }}
+    {{ end }}
+
+    {{/* Metadata bar */}}
+    <div class="post-meta">
+      <div class="meta-item post-date">
+        <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+          Publicado em {{ .Date.Format "02/01/2006" }}
+        </time>
+      </div>
+
+      {{ if and .Lastmod (ne .Lastmod .Date) }}
+      <div class="meta-item post-lastmod" title="Última modificação: {{ .Lastmod.Format "02/01/2006" }}">
+        <span>Atualizado em {{ .Lastmod.Format "02/01/2006" }}</span>
+      </div>
+      {{ end }}
+
+      <div class="meta-item post-reading-time">
+        <span>{{ .ReadingTime }} min de leitura</span>
+      </div>
+
+      <div class="meta-item post-word-count">
+        <span>{{ .WordCount }} palavras</span>
+      </div>
+
+      {{ with .Params.author | default .Site.Params.author }}
+      <div class="meta-item post-author">
+        <span>Por {{ . }}</span>
+      </div>
+      {{ end }}
+    </div>
+
+    {{/* Featured Cover Image */}}
+    {{ $coverImg := "" }}
+    {{ $coverAlt := .Title }}
+    {{ $coverCaption := "" }}
+
+    {{ if reflect.IsMap .Params.cover }}
+      {{ $coverImg = .Params.cover.image }}
+      {{ with .Params.cover.alt }}{{ $coverAlt = . }}{{ end }}
+      {{ with .Params.cover.caption }}{{ $coverCaption = . }}{{ end }}
+    {{ else if .Params.cover }}
+      {{ $coverImg = .Params.cover }}
+    {{ else if .Params.image }}
+      {{ $coverImg = .Params.image }}
+    {{ else if .Params.coverImage }}
+      {{ $coverImg = .Params.coverImage }}
+    {{ end }}
+
+    {{ with $coverImg }}
+      <figure class="post-cover">
+        <img src="{{ . | relURL }}" alt="{{ $coverAlt }}" class="cover-image" loading="lazy">
+        {{ with $coverCaption }}
+          <figcaption class="cover-caption">{{ . | markdownify }}</figcaption>
+        {{ end }}
+      </figure>
+    {{ end }}
+  </header>
+
+  {{/* Table of Contents */}}
+  {{ partial "toc.html" . }}
+
+  {{/* Main Post Content */}}
+  <div class="post-content markdown-body">
+    {{ .Content }}
+  </div>
+
+  {{/* Post Footer */}}
+  <footer class="post-footer">
+    {{/* Tags */}}
+    {{ with .Params.tags }}
+      <div class="post-tags-container">
+        <span class="tags-title">Tags:</span>
+        <div class="tags-list">
+          {{ range . }}
+            <a href="{{ "tags" | relURL }}/{{ . | urlize }}" class="tag-pill">#{{ . }}</a>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+    {{/* Share & Copy Link Section */}}
+    <div class="post-share">
+      <span class="share-title">Compartilhar:</span>
+      <div class="share-buttons">
+        <button class="share-btn copy-link-btn" data-url="{{ .Permalink }}" title="Copiar link do post">
+          Copiar Link
+        </button>
+        <a href="https://api.whatsapp.com/send?text={{ .Title | urlquery }}%20{{ .Permalink | absURL }}" target="_blank" rel="noopener noreferrer" class="share-btn whatsapp-btn" title="Compartilhar no WhatsApp">
+          WhatsApp
+        </a>
+        <a href="https://twitter.com/intent/tweet?text={{ .Title | urlquery }}&url={{ .Permalink | absURL }}" target="_blank" rel="noopener noreferrer" class="share-btn twitter-btn" title="Compartilhar no X / Twitter">
+          X
+        </a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink | absURL }}" target="_blank" rel="noopener noreferrer" class="share-btn linkedin-btn" title="Compartilhar no LinkedIn">
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    {{/* Author Bio Card */}}
+    <div class="author-card">
+      <div class="author-avatar">
+        {{ with .Site.Params.avatar | default .Params.avatar }}
+          <img src="{{ . | relURL }}" alt="{{ $.Params.author | default $.Site.Params.author | default $.Site.Title }}" class="avatar-img">
+        {{ else }}
+          <span>{{ .Params.initials | default .Site.Params.initials | default "DN" }}</span>
+        {{ end }}
+      </div>
+      <div class="author-details">
+        <h3 class="author-name">{{ .Params.author | default .Site.Params.author | default .Site.Title }}</h3>
+        <p class="author-bio">{{ .Site.Params.bio | default .Site.Params.description | default "Gastronomia, Viagens, Matemática e Carnaval." }}</p>
+      </div>
+    </div>
+
+    {{/* Next / Previous Navigation */}}
+    {{ if or .PrevInSection .NextInSection }}
+    <nav class="post-navigation" aria-label="Navegação entre posts">
+      <div class="nav-box prev-post">
+        {{ with .PrevInSection }}
+          <a href="{{ .RelPermalink }}" class="nav-card" rel="prev">
+            <span class="nav-arrow">&larr; Post anterior</span>
+            <span class="nav-title">{{ .Title }}</span>
+          </a>
+        {{ end }}
+      </div>
+
+      <div class="nav-box next-post">
+        {{ with .NextInSection }}
+          <a href="{{ .RelPermalink }}" class="nav-card" rel="next">
+            <span class="nav-arrow">Próximo post &rarr;</span>
+            <span class="nav-title">{{ .Title }}</span>
+          </a>
+        {{ end }}
+      </div>
+    </nav>
+    {{ end }}
+
+    {{/* Back to Section or Home */}}
+    <div class="post-back-wrapper">
+      <a href="{{ if .Section }}{{ .Section | relURL }}{{ else }}{{ "/" | relURL }}{{ end }}" class="back-link">
+        &larr; Voltar para {{ if .Section }}{{ .Section | humanize }}{{ else }}a Página Inicial{{ end }}
+      </a>
+    </div>
+  </footer>
+</article>
+{{ end }}

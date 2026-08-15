@@ -1,0 +1,97 @@
+{{ define "main" }}
+<div class="list-container">
+  {{/* Section / Taxonomy Header */}}
+  <header class="list-header">
+    <div class="post-breadcrumbs">
+      <a href="{{ "/" | relURL }}">Início</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">{{ .Title }}</span>
+    </div>
+
+    <h1 class="list-title">{{ .Title }}</h1>
+
+    {{ with .Description }}
+      <p class="list-description">{{ . }}</p>
+    {{ end }}
+
+    <div class="list-count-badge">
+      <span>{{ len .Pages }} {{ if eq (len .Pages) 1 }}artigo publicado{{ else }}artigos publicados{{ end }}</span>
+    </div>
+  </header>
+
+  {{/* Optional Section Content */}}
+  {{ with .Content }}
+    <div class="section-intro markdown-body">
+      {{ . }}
+    </div>
+  {{ end }}
+
+  {{/* Post List / Grid */}}
+  {{ $paginator := .Paginate .Pages }}
+  {{ if gt (len $paginator.Pages) 0 }}
+    <div class="post-feed">
+      {{ range $paginator.Pages }}
+        <article class="post-card">
+          <div class="post-card-header">
+            {{ with .Params.categories }}
+              <div class="post-card-categories">
+                {{ range . }}
+                  <span class="category-badge-small">{{ . }}</span>
+                {{ end }}
+              </div>
+            {{ end }}
+
+            <h2 class="post-card-title">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h2>
+
+            <div class="post-card-meta">
+              <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                {{ .Date.Format "02/01/2006" }}
+              </time>
+              <span class="meta-dot">&bull;</span>
+              <span>{{ .ReadingTime }} min de leitura</span>
+              {{ with .Params.author | default .Site.Params.author }}
+                <span class="meta-dot">&bull;</span>
+                <span>Por {{ . }}</span>
+              {{ end }}
+            </div>
+          </div>
+
+          {{/* Summary / Description */}}
+          <div class="post-card-summary">
+            {{ with .Params.description }}
+              <p>{{ . }}</p>
+            {{ else }}
+              <p>{{ .Summary | plainify | htmlUnescape | truncate 180 }}</p>
+            {{ end }}
+          </div>
+
+          {{/* Card Footer with Tags and Read More */}}
+          <div class="post-card-footer">
+            {{ with .Params.tags }}
+              <div class="post-card-tags">
+                {{ range first 3 . }}
+                  <span class="tag-pill-small">#{{ . }}</span>
+                {{ end }}
+              </div>
+            {{ end }}
+
+            <a href="{{ .RelPermalink }}" class="read-more-link" aria-label="Ler mais sobre {{ .Title }}">
+              Ler artigo &rarr;
+            </a>
+          </div>
+        </article>
+      {{ end }}
+    </div>
+
+    {{/* Pagination partial */}}
+    {{ partial "pagination.html" . }}
+  {{ else }}
+    <div class="empty-state">
+      <p class="empty-text">Nenhum post publicado aqui ainda.</p>
+      <a href="{{ "/" | relURL }}" class="back-link">&larr; Voltar para o início</a>
+    </div>
+  {{ end }}
+</div>
+{{ end }}

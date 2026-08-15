@@ -1,0 +1,44 @@
+baseURL = 'https://abobrinhas.com/'
+languageCode = 'pt-br'
+title = 'Abobrinhas Amadas ou Amadas Abobrinhas'
+paginate = 10
+
+[params]
+  author = "Daniel N."
+  description = "Matemática, Carnaval e Rio de Janeiro"
+  bio = "Explorando o que o Rio tem de melhor"
+  math = true
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+  [markup.highlight]
+    guessSyntax = true
+    lineNos = false
+    style = "github-dark"
+
+[menu]
+  [[menu.main]]
+    name = "Início"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Gastronomia"
+    url = "/gastronomia/"
+    weight = 2
+  [[menu.main]]
+    name = "Bares por Aí"
+    url = "/bares-por-ai/"
+    weight = 3
+  [[menu.main]]
+    name = "Matemática"
+    url = "/matematica/"
+    weight = 4
+  [[menu.main]]
+    name = "Carnaval"
+    url = "/carnaval/"
+    weight = 5

@@ -1,0 +1,25 @@
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <p class="footer-copy">
+        &copy; {{ now.Format "2006" }} <strong>{{ .Site.Params.author | default .Site.Title }}</strong>. Todos os direitos reservados.
+      </p>
+      <div class="footer-badges">
+        <span class="badge-90s">[ 800x600 ]</span>
+        <span class="badge-90s">[ Hugo Static Site ]</span>
+        <span class="hit-counter">VISITANTE: 004829</span>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      {{ with .OutputFormats.Get "rss" }}
+      <a href="{{ .Permalink | safeURL }}" class="footer-link rss-link" title="Feed RSS">
+        [ RSS Feed ]
+      </a>
+      {{ end }}
+      <button id="back-to-top" class="back-to-top-btn" type="button" aria-label="Voltar ao topo" title="Voltar ao topo">
+        [ Topo ]
+      </button>
+    </div>
+  </div>
+</footer>

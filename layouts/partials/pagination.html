@@ -1,0 +1,26 @@
+{{ $pag := .Paginator }}
+{{ if gt $pag.TotalPages 1 }}
+<nav class="pagination" aria-label="Paginação">
+  <div class="pagination-container">
+    {{ if $pag.HasPrev }}
+      <a href="{{ $pag.Prev.URL }}" class="pagination-btn pagination-prev" rel="prev">
+        ← Mais recentes
+      </a>
+    {{ else }}
+      <span class="pagination-btn pagination-disabled">← Mais recentes</span>
+    {{ end }}
+
+    <span class="pagination-info">
+      Página {{ $pag.PageNumber }} de {{ $pag.TotalPages }}
+    </span>
+
+    {{ if $pag.HasNext }}
+      <a href="{{ $pag.Next.URL }}" class="pagination-btn pagination-next" rel="next">
+        Mais antigos →
+      </a>
+    {{ else }}
+      <span class="pagination-btn pagination-disabled">Mais antigos →</span>
+    {{ end }}
+  </div>
+</nav>
+{{ end }}

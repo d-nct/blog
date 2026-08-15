@@ -1,0 +1,10 @@
+{{ if and (ne .Params.toc false) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") (ne .TableOfContents "") }}
+<details class="post-toc" open>
+  <summary class="toc-title">
+    <span>Índice do Artigo</span>
+  </summary>
+  <nav class="toc-content">
+    {{ .TableOfContents }}
+  </nav>
+</details>
+{{ end }}

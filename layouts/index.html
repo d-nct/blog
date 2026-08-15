@@ -1,0 +1,109 @@
+{{ define "main" }}
+<div class="home-container">
+  {{/* Hero Section */}}
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Abobrinhas Amadas ou Amadas Abobrinhas</h1>
+      <p class="hero-description">
+        Aqui compartilho <b>reviews de comes & bebes</b> cariocas, <b>provocações matemáticas</b> e quaisquer outras abobrinhas que derem na telha! 
+      </p>
+      <p class="hero-description">
+        Sobre o nome do blog, estou em dúvida entre <i>Abobrinhas Amadas</i> ou <i>Amadas Abobrinhas</i>.
+      </p>
+    </div>
+
+    {{/* Topic Shortcuts */}}
+    <div class="topics-grid">
+      <a href="{{ "bares-por-ai" | relURL }}" class="topic-card">
+        <div class="topic-info">
+          <h2 class="topic-name">Bares por A&iacute;</h2>
+          <p class="topic-desc">Sete caipirinhas e um suco de limão</p>
+        </div>
+      </a>
+      <a href="{{ "gastronomia" | relURL }}" class="topic-card">
+        <div class="topic-info">
+          <h2 class="topic-name">Gastronomia</h2>
+          <p class="topic-desc">Receitas que deram certo (ou que valem o registro)</p>
+        </div>
+      </a>
+      <a href="{{ "matematica" | relURL }}" class="topic-card">
+        <div class="topic-info">
+          <h2 class="topic-name">Matem&aacute;tica</h2>
+          <p class="topic-desc">Artigos, provas e ideias</p>
+        </div>
+      </a>
+      <!--
+      <a href="{{ "carnaval" | relURL }}" class="topic-card">
+        <div class="topic-info">
+          <h2 class="topic-name">Carnaval</h2>
+          <p class="topic-desc">C&oacute;digos, experimentos e carnaval pr&aacute;ticos</p>
+        </div>
+      </a>
+      -->
+    </div>
+  </section>
+
+  {{/* Recent Posts Section */}}
+  <section class="recent-posts-section">
+    <div class="section-header">
+      <h2 class="section-title">&Uacute;ltimas Publica&ccedil;&otilde;es</h2>
+      <span class="section-subtitle">Textos e anota&ccedil;&otilde;es recentes</span>
+    </div>
+
+    {{ $recent := where .Site.RegularPages "Type" "not in" (slice "page") }}
+    {{ if gt (len $recent) 0 }}
+      <div class="post-feed">
+        {{ range first 6 $recent }}
+          <article class="post-card">
+            <div class="post-card-header">
+              {{ with .Section }}
+                <div class="post-card-categories">
+                  <a href="{{ . | relURL }}" class="category-badge-small">{{ . | humanize }}</a>
+                </div>
+              {{ end }}
+
+              <h3 class="post-card-title">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              </h3>
+
+              <div class="post-card-meta">
+                <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                  {{ .Date.Format "02/01/2006" }}
+                </time>
+                <span class="meta-dot">&bull;</span>
+                <span>{{ .ReadingTime }} min de leitura</span>
+              </div>
+            </div>
+
+            <div class="post-card-summary">
+              {{ with .Params.description }}
+                <p>{{ . }}</p>
+              {{ else }}
+                <p>{{ .Summary | plainify | htmlUnescape | truncate 170 }}</p>
+              {{ end }}
+            </div>
+
+            <div class="post-card-footer">
+              {{ with .Params.tags }}
+                <div class="post-card-tags">
+                  {{ range first 3 . }}
+                    <span class="tag-pill-small">#{{ . }}</span>
+                  {{ end }}
+                </div>
+              {{ end }}
+
+              <a href="{{ .RelPermalink }}" class="read-more-link">
+                Ler artigo &rarr;
+              </a>
+            </div>
+          </article>
+        {{ end }}
+      </div>
+    {{ else }}
+      <div class="empty-state">
+        <p class="empty-text">Nenhum artigo publicado ainda.</p>
+      </div>
+    {{ end }}
+  </section>
+</div>
+{{ end }}
