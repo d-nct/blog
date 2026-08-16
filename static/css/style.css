@@ -3,9 +3,9 @@
    ========================================================================== */
 
 :root {
-  --font-serif: "Times New Roman", Times, "Liberation Serif", serif;
-  --font-sans: "MS Sans Serif", Geneva, Tahoma, Arial, sans-serif;
-  --font-mono: "Courier New", Courier, "Lucida Console", monospace;
+  --font-serif: "Times New Roman", Times, "Tinos", "EB Garamond", "Liberation Serif", "Nimbus Roman", serif;
+  --font-sans: "Times New Roman", Times, "Tinos", "EB Garamond", "Liberation Serif", serif;
+  --font-mono: "Courier New", Courier, "Courier Prime", "Lucida Console", "Liberation Mono", monospace;
 
   /* Color Palette - 90s Classic Pale Yellow / Manila Web Paper */
   --desktop-bg: #ece6cc;
@@ -137,10 +137,10 @@ a:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   font-weight: bold;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
 }
 
 .window-controls {
@@ -184,11 +184,11 @@ a:active {
 
 .brand-title {
   font-family: var(--font-serif);
-  font-size: 1.8rem;
+  font-size: 1.95rem;
   font-weight: bold;
   color: var(--text-primary);
   text-decoration: none;
-  letter-spacing: -0.02em;
+  letter-spacing: normal;
 }
 
 .brand-title:hover {
@@ -218,12 +218,12 @@ a:active {
 }
 
 .nav-link {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   font-weight: bold;
   color: var(--text-primary);
   background: var(--btn-bg);
-  padding: 0.3rem 0.65rem;
+  padding: 0.35rem 0.75rem;
   text-decoration: none;
   border-top: 2px solid var(--border-bevel-light);
   border-left: 2px solid var(--border-bevel-light);
@@ -284,7 +284,7 @@ hr {
   font-size: 2.2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  letter-spacing: -0.02em;
+  letter-spacing: normal;
 }
 
 .hero-description {
@@ -334,10 +334,10 @@ hr {
 }
 
 .topic-desc {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .recent-posts-section {
@@ -465,8 +465,8 @@ hr {
 }
 
 .read-more-link {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   font-weight: bold;
   color: var(--link-color);
   margin-left: auto;
@@ -526,7 +526,7 @@ hr {
   font-size: 2.3rem;
   font-weight: bold;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: normal;
   margin-bottom: 0.5rem;
 }
 
@@ -589,7 +589,7 @@ hr {
   border: 2px inset var(--border-bevel-shadow);
   padding: 0.85rem 1.15rem;
   margin: 1rem 0 1.75rem;
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
 }
 
 .toc-title {
@@ -725,8 +725,8 @@ hr {
   border-right: 1px solid var(--border-bevel-shadow);
   border-bottom: 1px solid var(--border-bevel-shadow);
   padding: 0.2rem 0.5rem;
-  font-size: 0.75rem;
-  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-family: var(--font-serif);
   font-weight: bold;
   cursor: pointer;
 }
@@ -743,8 +743,8 @@ hr {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
   border: 2px solid var(--border-dark);
 }
 
@@ -860,8 +860,8 @@ hr {
 }
 
 .share-title {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   font-weight: bold;
 }
 
@@ -872,8 +872,8 @@ hr {
 }
 
 .share-btn {
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
   font-weight: bold;
   padding: 0.3rem 0.6rem;
   background: var(--btn-bg);
@@ -936,10 +936,10 @@ hr {
 }
 
 .author-bio {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 /* Post Navigation */
@@ -1000,9 +1000,9 @@ hr {
 }
 
 .back-link {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-primary);
   background: var(--btn-bg);
   border-top: 2px solid var(--border-bevel-light);
@@ -1096,8 +1096,8 @@ hr {
 }
 
 .pagination-btn {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   font-weight: bold;
   padding: 0.35rem 0.75rem;
   background: var(--btn-bg);
@@ -1197,8 +1197,8 @@ hr {
 }
 
 .back-to-top-btn {
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
   font-weight: bold;
   padding: 0.25rem 0.55rem;
   background: var(--btn-bg);
